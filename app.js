@@ -1,116 +1,53 @@
 const path = require('path');
 const express = require('express');
+const session = require('express-session');
+const expressLayouts = require('express-ejs-layouts');
+
+const routes = require('./src/routes');
+const cartLocals = require('./src/middlewares/cartLocals');
+const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const products = [
-  {
-    id: 1,
-    name: 'Auriculares Urbanos',
-    description: 'Auriculares cómodos para escuchar música, estudiar o jugar.',
-    points: 1200,
-    image: '/images/auriculares.svg',
-  },
-  {
-    id: 2,
-    name: 'Mochila Tech',
-    description: 'Mochila resistente con espacio para notebook y accesorios.',
-    points: 2500,
-    image: '/images/mochila.svg',
-  },
-  {
-    id: 3,
-    name: 'Botella Térmica',
-    description: 'Botella reutilizable para mantener bebidas frías o calientes.',
-    points: 900,
-    image: '/images/botella.svg',
-  },
-  {
-    id: 4,
-    name: 'Cuaderno Premium',
-    description: 'Cuaderno de tapa dura ideal para apuntes de clase.',
-    points: 650,
-    image: '/images/cuaderno.svg',
-  },
-];
-
-const cartItems = [
-  {
-    name: 'Auriculares Urbanos',
-    quantity: 1,
-    points: 1200,
-    image: '/images/auriculares.svg',
-  },
-  {
-    name: 'Botella Térmica',
-    quantity: 2,
-    points: 900,
-    image: '/images/botella.svg',
-  },
-];
-
-const cartTotal = cartItems.reduce((total, item) => total + item.points * item.quantity, 0);
-
 /**
  * Configuración principal de Express.
- * Define EJS como motor de vistas y expone la carpeta pública.
+ * Define EJS con layout base, expone la carpeta pública, habilita el parseo de
+ * formularios y activa las sesiones donde vive el carrito.
  */
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'src', 'views'));
+app.set('layout', 'layouts/main');
+app.use(expressLayouts);
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'mi-ecommerce-sprint-2',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { httpOnly: true, sameSite: 'lax' },
+  }),
+);
+
+app.use(cartLocals);
 
 /**
- * Ruta principal del ecommerce.
- * Renderiza la página de inicio con categorías y productos mockeados.
+ * Rutas de la aplicación agrupadas en el router principal.
  */
-app.get('/', (req, res) => {
-  res.render('pages/index', { products });
-});
+app.use('/', routes);
 
 /**
- * Ruta de detalle de producto.
- * Renderiza una pantalla estática con la información de un producto ejemplo.
+ * Manejo de rutas inexistentes (404) y middleware global de errores (500).
  */
-app.get('/products', (req, res) => {
-  res.render('pages/product', { product: products[0] });
-});
-
-/**
- * Ruta del carrito.
- * Muestra productos de ejemplo sin persistencia ni base de datos.
- */
-app.get('/cart', (req, res) => {
-  res.render('pages/cart', { cartItems, cartTotal });
-});
-
-/**
- * Ruta de checkout.
- * Presenta un resumen simple de compra para finalizar el flujo del sprint.
- */
-app.get('/checkout', (req, res) => {
-  res.render('pages/checkout', { cartItems, cartTotal });
-});
-
-/**
- * Ruta de login.
- * Renderiza el formulario de inicio de sesión estático.
- */
-app.get('/login', (req, res) => {
-  res.render('pages/login');
-});
-
-/**
- * Ruta de registro.
- * Renderiza el formulario de registro estático.
- */
-app.get('/register', (req, res) => {
-  res.render('pages/register');
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`Mi Ecommerce Sprint 1 disponible en http://localhost:${PORT}`);
+    console.log(`Mi Ecommerce Sprint 2 disponible en http://localhost:${PORT}`);
   });
 }
 

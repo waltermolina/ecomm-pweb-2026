@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Mi Ecommerce</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <main>
+    <section class="auth-page" aria-labelledby="login-title">
+      <form class="auth-form" novalidate>
+        <h1 id="login-title">Iniciar Sesión</h1>
+
+        <div class="form-field">
+          <label for="login-user">Usuario o email</label>
+          <input id="login-user" name="user" type="text" autocomplete="username" required>
+        </div>
+
+        <div class="form-field">
+          <label for="login-password">Contraseña</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="button">Iniciar Sesión</button>
+
+        <p>¿No tenés cuenta? <a href="/register">Registrate</a></p>
+        <p><a href="/">Volver a Home</a></p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

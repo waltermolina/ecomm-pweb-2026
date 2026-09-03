@@ -1,0 +1,13 @@
+<article class="product-card">
+  <a href="/products/<%= product.id %>" aria-label="Ver detalle de <%= product.name %>">
+    <img src="<%= product.image %>" alt="Imagen de <%= product.name %>">
+    <div class="product-card__body">
+      <h3><%= product.name %></h3>
+      <p class="product-card__category"><%= product.category %></p>
+      <p class="price">$<%= product.price %></p>
+      <% if (product.stock === 0) { %>
+        <p class="badge badge--out">Sin stock</p>
+      <% } %>
+    </div>
+  </a>
+</article>

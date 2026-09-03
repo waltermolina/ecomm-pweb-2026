@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Mi Ecommerce</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <main>
+    <section class="auth-page" aria-labelledby="register-title">
+      <form class="auth-form" id="register-form" action="/register" method="POST" novalidate>
+        <h1 id="register-title">Registrarse</h1>
+
+        <% if (success) { %>
+          <p class="form-success" role="status">¡Registro válido! Ya podés iniciar sesión.</p>
+        <% } %>
+
+        <% if (Object.keys(errors).length > 0) { %>
+          <ul class="form-errors" role="alert">
+            <% Object.values(errors).forEach((error) => { %>
+              <li><%= error %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+
+        <div class="form-field">
+          <label for="register-first-name">Nombre</label>
+          <input id="register-first-name" name="firstName" type="text" autocomplete="given-name" value="<%= values.firstName %>" required>
+          <p class="field-error" data-error-for="firstName"><%= errors.firstName || '' %></p>
+        </div>
+
+        <div class="form-field">
+          <label for="register-last-name">Apellido</label>
+          <input id="register-last-name" name="lastName" type="text" autocomplete="family-name" value="<%= values.lastName %>" required>
+          <p class="field-error" data-error-for="lastName"><%= errors.lastName || '' %></p>
+        </div>
+
+        <div class="form-field">
+          <label for="register-email">Email</label>
+          <input id="register-email" name="email" type="email" autocomplete="email" value="<%= values.email %>" required>
+          <p class="field-error" data-error-for="email"><%= errors.email || '' %></p>
+        </div>
+
+        <div class="form-field">
+          <label for="register-password">Contraseña</label>
+          <input id="register-password" name="password" type="password" autocomplete="new-password" required>
+          <p class="field-hint">Mínimo 8 caracteres, con una letra, un número y un carácter especial.</p>
+          <p class="field-error" data-error-for="password"><%= errors.password || '' %></p>
+        </div>
+
+        <button type="submit" class="button">Registrarse</button>
+
+        <p>¿Ya tenés cuenta? <a href="/login">Ir a Login</a></p>
+        <p><a href="/">Volver a Home</a></p>
+      </form>
+    </section>
+  </main>
+  <script src="/js/registerValidation.js"></script>
+</body>
+</html>

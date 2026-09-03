@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title">
+  <title id="title">Teclado Mecánico</title>
+  <rect width="640" height="480" fill="#dbeafe"/>
+  <rect x="90" y="160" width="460" height="180" rx="24" fill="#2563eb"/>
+  <g fill="#dbeafe">
+    <rect x="130" y="200" width="60" height="46" rx="10"/>
+    <rect x="210" y="200" width="60" height="46" rx="10"/>
+    <rect x="290" y="200" width="60" height="46" rx="10"/>
+    <rect x="370" y="200" width="60" height="46" rx="10"/>
+    <rect x="450" y="200" width="60" height="46" rx="10"/>
+    <rect x="170" y="266" width="300" height="46" rx="12"/>
+  </g>
+</svg>
