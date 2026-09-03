@@ -23,7 +23,7 @@ const productService = {
    * @returns {import('../models/productModel').Product|undefined} Producto encontrado o `undefined`.
    */
   getById(id) {
-    return productModel.findAll().find((product) => product.id === Number(id));
+    return productModel.findById(Number(id));
   },
 
   /**
