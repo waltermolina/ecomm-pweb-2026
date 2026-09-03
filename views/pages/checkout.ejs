@@ -1,0 +1,17 @@
+<%- include('../partials/header', { title: 'Checkout' }) %>
+
+<section class="checkout" aria-labelledby="checkout-title">
+  <h1 id="checkout-title">Checkout</h1>
+  <div class="summary">
+    <h2>Resumen de compra</h2>
+    <ul>
+      <% cartItems.forEach((item) => { %>
+        <li><%= item.name %> x <%= item.quantity %> - <%= item.points * item.quantity %> puntos</li>
+      <% }) %>
+    </ul>
+    <p class="price">Total: <%= cartTotal %> puntos</p>
+    <button type="button" class="button">Finalizar compra</button>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

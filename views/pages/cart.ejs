@@ -1,0 +1,30 @@
+<%- include('../partials/header', { title: 'Carrito' }) %>
+
+<section class="section" aria-labelledby="cart-title">
+  <h1 id="cart-title">Carrito</h1>
+
+  <div class="cart-list">
+    <% cartItems.forEach((item) => { %>
+      <article class="cart-item">
+        <img src="<%= item.image %>" alt="Imagen de <%= item.name %>">
+        <div>
+          <h2><%= item.name %></h2>
+          <p>Cantidad: <%= item.quantity %></p>
+        </div>
+        <div class="quantity-controls" aria-label="Controles de cantidad">
+          <button type="button">-</button>
+          <button type="button">+</button>
+        </div>
+        <p class="subtotal">Subtotal: <%= item.points * item.quantity %> puntos</p>
+      </article>
+    <% }) %>
+  </div>
+
+  <div class="cart-actions">
+    <p class="price">Total: <%= cartTotal %> puntos</p>
+    <a class="button" href="/checkout">Ir a Pagar</a>
+    <a class="button button--secondary" href="/">Volver al listado</a>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

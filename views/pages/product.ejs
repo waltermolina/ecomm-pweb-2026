@@ -1,0 +1,14 @@
+<%- include('../partials/header', { title: 'Producto' }) %>
+
+<section class="product-detail" aria-labelledby="product-title">
+  <img src="<%= product.image %>" alt="Imagen de <%= product.name %>">
+  <div class="product-detail__content">
+    <p class="eyebrow">Detalle del producto</p>
+    <h1 id="product-title"><%= product.name %></h1>
+    <p><%= product.description %></p>
+    <p class="price"><%= product.points %> puntos</p>
+    <a class="button" href="/cart">Agregar al carrito</a>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

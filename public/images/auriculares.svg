@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title">
+  <title id="title">Auriculares Urbanos</title>
+  <rect width="640" height="480" fill="#dbeafe"/>
+  <path d="M170 245a150 150 0 0 1 300 0" fill="none" stroke="#1d4ed8" stroke-width="34" stroke-linecap="round"/>
+  <rect x="120" y="240" width="92" height="145" rx="32" fill="#2563eb"/>
+  <rect x="428" y="240" width="92" height="145" rx="32" fill="#2563eb"/>
+  <path d="M212 340h216" stroke="#172033" stroke-width="22" stroke-linecap="round"/>
+</svg>
