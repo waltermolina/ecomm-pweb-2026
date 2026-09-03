@@ -1,0 +1,35 @@
+<section class="product-detail" aria-labelledby="product-title">
+  <img src="<%= product.image %>" alt="Imagen de <%= product.name %>">
+  <div class="product-detail__content">
+    <p class="eyebrow">Categoría:
+      <a href="/categories/<%= encodeURIComponent(product.category) %>"><%= product.category %></a>
+    </p>
+    <h1 id="product-title"><%= product.name %></h1>
+    <p><%= product.description %></p>
+    <p class="price">$<%= product.price %></p>
+
+    <% if (product.stock === 0) { %>
+      <p class="badge badge--out">Sin stock</p>
+      <button type="button" class="button" disabled>Agregar al carrito</button>
+    <% } else { %>
+      <p class="stock">Stock disponible: <%= product.stock %></p>
+      <form action="/cart/add/<%= product.id %>" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="button">Agregar al carrito</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="related-title">
+  <h2 id="related-title">Productos relacionados</h2>
+  <% if (relatedProducts.length === 0) { %>
+    <p class="empty-message">Todavía no hay otros productos en esta categoría.</p>
+  <% } else { %>
+    <div class="product-grid">
+      <% relatedProducts.forEach((related) => { %>
+        <%- include('../partials/productCard', { product: related }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</section>

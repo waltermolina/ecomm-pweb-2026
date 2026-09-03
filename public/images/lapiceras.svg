@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title">
+  <title id="title">Set de Lapiceras</title>
+  <rect width="640" height="480" fill="#f1f5f9"/>
+  <g stroke-linecap="round" stroke-width="30">
+    <path d="M220 380V160" stroke="#0f172a"/>
+    <path d="M320 380V160" stroke="#2563eb"/>
+    <path d="M420 380V160" stroke="#dc2626"/>
+  </g>
+  <g fill="#f1f5f9">
+    <path d="M205 160h30l-15-40z"/><path d="M305 160h30l-15-40z"/><path d="M405 160h30l-15-40z"/>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+<section class="section" aria-labelledby="cart-title">
+  <h1 id="cart-title">Carrito</h1>
+
+  <% if (cartItems.length === 0) { %>
+    <p class="empty-message">Tu carrito está vacío</p>
+    <a class="button" href="/">Volver al inicio</a>
+  <% } else { %>
+    <div class="cart-list">
+      <% cartItems.forEach((item) => { %>
+        <article class="cart-item">
+          <img src="<%= item.image %>" alt="Imagen de <%= item.name %>">
+          <div>
+            <h2><a href="/products/<%= item.productId %>"><%= item.name %></a></h2>
+            <p>Precio unitario: $<%= item.price %></p>
+            <p>Cantidad: <%= item.quantity %></p>
+          </div>
+          <div class="quantity-controls" aria-label="Controles de cantidad de <%= item.name %>">
+            <form action="/cart/decrease/<%= item.productId %>" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" aria-label="Quitar una unidad de <%= item.name %>">-</button>
+            </form>
+            <form action="/cart/increase/<%= item.productId %>" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" aria-label="Agregar una unidad de <%= item.name %>">+</button>
+            </form>
+          </div>
+          <p class="subtotal">Subtotal: $<%= item.subtotal %></p>
+        </article>
+      <% }) %>
+    </div>
+
+    <div class="cart-actions">
+      <p class="price">Total: $<%= cartTotal %></p>
+      <a class="button" href="/checkout">Ir a Pagar</a>
+      <form action="/cart/clear" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="button button--secondary">Vaciar carrito</button>
+      </form>
+      <a class="button button--secondary" href="/products">Seguir comprando</a>
+    </div>
+  <% } %>
+</section>

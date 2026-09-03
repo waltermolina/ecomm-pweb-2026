@@ -1,0 +1,17 @@
+<section class="section" aria-labelledby="search-title">
+  <h1 id="search-title">Resultados de búsqueda</h1>
+  <% if (query) { %>
+    <p class="eyebrow">Buscaste: <%= query %></p>
+  <% } %>
+
+  <% if (products.length === 0) { %>
+    <p class="empty-message">No encontramos productos que coincidan con tu búsqueda.</p>
+    <a class="button button--secondary" href="/products">Ver todos los productos</a>
+  <% } else { %>
+    <div class="product-grid">
+      <% products.forEach((product) => { %>
+        <%- include('../partials/productCard', { product }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</section>

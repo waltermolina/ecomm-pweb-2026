@@ -1,0 +1,35 @@
+<section class="hero" aria-labelledby="home-title">
+  <div>
+    <p class="eyebrow">Tienda ficticia</p>
+    <h1 id="home-title">Comprá los productos que más te gustan</h1>
+    <p>Ejemplo de ecommerce monolítico renderizado desde el servidor con Express, EJS y MVC.</p>
+  </div>
+  <a class="button button--secondary" href="/products">Ver productos</a>
+</section>
+
+<section class="section" aria-labelledby="categories-title">
+  <h2 id="categories-title">Categorías</h2>
+  <div class="categories">
+    <% categories.forEach((category) => { %>
+      <a href="/categories/<%= encodeURIComponent(category) %>"><%= category %></a>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="featured-title">
+  <h2 id="featured-title">Te puede interesar</h2>
+  <div class="product-grid">
+    <% featuredProducts.forEach((product) => { %>
+      <%- include('../partials/productCard', { product }) %>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="best-sellers-title">
+  <h2 id="best-sellers-title">Los más pedidos</h2>
+  <div class="product-grid">
+    <% bestSellers.forEach((product) => { %>
+      <%- include('../partials/productCard', { product }) %>
+    <% }) %>
+  </div>
+</section>

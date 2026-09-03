@@ -1,7 +1,7 @@
 {
   "name": "ecomm-pweb-2026",
   "version": "1.0.0",
-  "description": "Ecommerce educativo Sprint 1 con Express y EJS.",
+  "description": "Ecommerce educativo Sprint 2 con Express, EJS y arquitectura MVC.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -16,6 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^6.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0"
   }
 }

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title">
+  <title id="title">Lámpara de Escritorio</title>
+  <rect width="640" height="480" fill="#fef3c7"/>
+  <path d="M200 380h240" stroke="#b45309" stroke-width="26" stroke-linecap="round"/>
+  <path d="M320 370V220" stroke="#b45309" stroke-width="20" stroke-linecap="round"/>
+  <path d="M230 220h180l-50-90h-80z" fill="#f59e0b"/>
+</svg>

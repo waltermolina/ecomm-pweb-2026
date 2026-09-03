@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title">
+  <title id="title">Parlante Bluetooth</title>
+  <rect width="640" height="480" fill="#fee2e2"/>
+  <rect x="200" y="110" width="240" height="260" rx="32" fill="#b91c1c"/>
+  <circle cx="320" cy="200" r="38" fill="#fee2e2"/>
+  <circle cx="320" cy="300" r="52" fill="#fee2e2"/>
+</svg>

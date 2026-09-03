@@ -1,0 +1,27 @@
+<section class="section" aria-labelledby="products-title">
+  <div class="section__head">
+    <h1 id="products-title"><%= heading %></h1>
+    <% if (showSort) { %>
+    <form class="sort-form" action="" method="GET">
+      <label for="sort">Ordenar por precio</label>
+      <select id="sort" name="sort" onchange="this.form.submit()">
+        <option value="" <%= sort === '' ? 'selected' : '' %>>Sin orden</option>
+        <option value="asc" <%= sort === 'asc' ? 'selected' : '' %>>Menor a mayor</option>
+        <option value="desc" <%= sort === 'desc' ? 'selected' : '' %>>Mayor a menor</option>
+      </select>
+      <noscript><button type="submit" class="button">Aplicar</button></noscript>
+    </form>
+    <% } %>
+  </div>
+
+  <% if (products.length === 0) { %>
+    <p class="empty-message"><%= emptyMessage %></p>
+    <a class="button button--secondary" href="/">Volver al inicio</a>
+  <% } else { %>
+    <div class="product-grid">
+      <% products.forEach((product) => { %>
+        <%- include('../partials/productCard', { product }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
