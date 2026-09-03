@@ -47,13 +47,15 @@ function validateProductId(req, res, next) {
     return;
   }
 
-  if (!productService.exists(id)) {
+  const product = productService.getById(id);
+
+  if (!product) {
     next(createHttpError(404, 'Producto inexistente.'));
     return;
   }
 
   req.productId = id;
-  req.product = productService.getById(id);
+  req.product = product;
   next();
 }
 

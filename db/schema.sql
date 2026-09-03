@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS products (
   name TEXT NOT NULL,
   description TEXT,
   category TEXT,
-  categories TEXT,
+  categories TEXT, -- Opcional: lista JSON de categorías adicionales (multi-categoría futura).
   price REAL NOT NULL,
   stock INTEGER NOT NULL DEFAULT 0,
   image TEXT

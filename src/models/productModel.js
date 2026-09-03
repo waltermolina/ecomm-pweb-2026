@@ -33,15 +33,6 @@ const productModel = {
   findById(id) {
     return db.prepare('SELECT * FROM products WHERE id = ?').get(id);
   },
-
-  /**
-   * Verifica si existe un producto con el identificador indicado.
-   * @param {number} id Identificador numérico del producto.
-   * @returns {boolean} `true` si el producto existe en la base.
-   */
-  exists(id) {
-    return Boolean(db.prepare('SELECT 1 FROM products WHERE id = ?').get(id));
-  },
 };
 
 module.exports = productModel;

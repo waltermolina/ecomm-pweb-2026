@@ -27,16 +27,6 @@ const productService = {
   },
 
   /**
-   * Verifica si existe un producto con el identificador indicado.
-   * Utilizada por el middleware de normalización de ids contra SQLite.
-   * @param {number} id Identificador numérico del producto.
-   * @returns {boolean} `true` si el producto existe en la base.
-   */
-  exists(id) {
-    return productModel.exists(Number(id));
-  },
-
-  /**
    * Filtra los productos que pertenecen a una categoría.
    * La comparación no distingue mayúsculas, minúsculas ni acentos.
    * @param {string} category Nombre de la categoría.
