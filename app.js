@@ -3,12 +3,14 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
+const { WebSocketServer } = require('ws');
 
 const { migrateProducts } = require('./db/migrate');
 const routes = require('./src/routes');
 const cartLocals = require('./src/middlewares/cartLocals');
 const csrfProtection = require('./src/middlewares/csrfProtection');
 const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandler');
+const eventService = require('./src/services/eventService');
 
 /**
  * Asegura que el catálogo semilla esté disponible en SQLite.
@@ -25,6 +27,17 @@ const PORT = process.env.PORT || 3000;
  */
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 
+const sessionMiddleware = session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+  },
+});
+
 /**
  * Configuración principal de Express.
  * Define EJS con layout base, expone la carpeta pública, habilita el parseo de
@@ -38,18 +51,7 @@ app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
-app.use(
-  session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production',
-    },
-  }),
-);
+app.use(sessionMiddleware);
 
 app.use(csrfProtection);
 app.use(cartLocals);
@@ -66,9 +68,19 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 if (require.main === module) {
-  app.listen(PORT, () => {
+  const httpServer = app.listen(PORT, () => {
     console.log(`Mi Ecommerce Sprint 3 disponible en http://localhost:${PORT}`);
   });
+
+  /**
+   * Servidor WebSocket asociado al mismo servidor HTTP de Express.
+   * Reutiliza la sesión para sincronizar el carrito entre pestañas del usuario.
+   */
+  const wss = new WebSocketServer({
+    server: httpServer,
+  });
+
+  eventService.configure(wss, sessionMiddleware);
 }
 
 module.exports = app;

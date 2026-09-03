@@ -13,7 +13,7 @@
       <button type="button" class="button" disabled>Agregar al carrito</button>
     <% } else { %>
       <p class="stock">Stock disponible: <%= product.stock %></p>
-      <form action="/cart/add/<%= product.id %>" method="POST">
+      <form action="/cart/add/<%= product.id %>" method="POST" data-cart-form>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit" class="button">Agregar al carrito</button>
       </form>

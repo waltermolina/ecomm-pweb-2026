@@ -108,6 +108,26 @@ main {
   gap: 12px;
 }
 
+.connection-status {
+  margin: 0;
+  font-weight: 700;
+}
+
+.cart-notification {
+  position: fixed;
+  top: 96px;
+  right: 24px;
+  z-index: 10;
+  max-width: min(320px, calc(100% - 48px));
+  padding: 14px 18px;
+  color: #166534;
+  font-weight: 700;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
 .hero,
 .section,
 .product-detail,
