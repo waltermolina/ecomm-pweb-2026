@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title">
+  <title id="title">Cuaderno Premium</title>
+  <rect width="640" height="480" fill="#fef3c7"/>
+  <rect x="190" y="80" width="280" height="340" rx="22" fill="#f59e0b"/>
+  <rect x="230" y="120" width="200" height="260" rx="12" fill="#fff7ed"/>
+  <path d="M190 135h-32M190 205h-32M190 275h-32M190 345h-32" stroke="#92400e" stroke-width="16" stroke-linecap="round"/>
+</svg>
