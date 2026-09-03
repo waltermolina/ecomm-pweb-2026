@@ -1,4 +1,9 @@
-[
+/**
+ * Datos semilla del catálogo de productos.
+ * Reemplaza al antiguo src/data/products.json eliminado en el Sprint 3.
+ * Se utiliza únicamente por db/migrate.js para poblar SQLite una sola vez.
+ */
+module.exports = [
   {
     "id": 1,
     "name": "Auriculares Urbanos",
@@ -107,4 +112,4 @@
     "stock": 30,
     "image": "/images/lapiceras.svg"
   }
-]
+];

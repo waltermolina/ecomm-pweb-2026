@@ -118,7 +118,7 @@ const cartService = {
   },
 
   /**
-   * Combina los ids guardados en sesión con los datos reales del JSON.
+   * Combina los ids guardados en sesión con los datos reales obtenidos de SQLite.
    * Descarta líneas cuyo producto ya no existe.
    * @param {import('express').Request} req Request de Express.
    * @returns {CartDetailItem[]} Detalle del carrito listo para renderizar.

@@ -1,10 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-
-const DATA_FILE = path.join(__dirname, '..', 'data', 'products.json');
-
-/** @type {{ mtimeMs: number, products: Product[] }|null} Caché en memoria del catálogo. */
-let cache = null;
+const db = require('../../db/database');
 
 /**
  * @typedef {Object} Product
@@ -19,32 +13,25 @@ let cache = null;
 
 /**
  * Modelo de productos.
- * Encapsula el acceso al archivo JSON local que funciona como fuente de datos.
- * El contenido se cachea en memoria y se recarga cuando el archivo cambia.
+ * Encapsula el acceso a la tabla `products` de SQLite mediante `better-sqlite3`.
+ * Toda la información de productos proviene exclusivamente de la base de datos.
  */
 const productModel = {
   /**
-   * Lee todos los productos desde `src/data/products.json`.
+   * Obtiene todos los productos almacenados en SQLite.
    * @returns {Product[]} Colección de productos del catálogo.
-   * @throws {Error} Si el archivo no existe o no contiene JSON válido.
    */
   findAll() {
-    const { mtimeMs } = fs.statSync(DATA_FILE);
+    return db.prepare('SELECT * FROM products ORDER BY id').all();
+  },
 
-    if (cache && cache.mtimeMs === mtimeMs) {
-      return cache.products;
-    }
-
-    const fileContent = fs.readFileSync(DATA_FILE, 'utf-8');
-    const products = JSON.parse(fileContent);
-
-    if (!Array.isArray(products)) {
-      throw new Error('El archivo de productos no contiene un listado válido.');
-    }
-
-    cache = { mtimeMs, products };
-
-    return products;
+  /**
+   * Busca un producto por su identificador en SQLite.
+   * @param {number} id Identificador numérico del producto.
+   * @returns {Product|undefined} Producto encontrado o `undefined`.
+   */
+  findById(id) {
+    return db.prepare('SELECT * FROM products WHERE id = ?').get(id);
   },
 };
 
