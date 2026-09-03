@@ -45,6 +45,7 @@ project
 - Detalle de producto con productos relacionados por categoría (máximo 4) y control de stock.
 - Listado por categoría, ordenamiento por precio y búsqueda por nombre.
 - Checkout temporal informativo, sin lógica de negocio.
+- Protección CSRF en los formularios que modifican estado (carrito, login y registro).
 - Comentarios JSDoc en controladores, servicios, middlewares, rutas y configuración de Express.
 
 ## Rutas

@@ -10,6 +10,7 @@
   <main>
     <section class="auth-page" aria-labelledby="login-title">
       <form class="auth-form" action="/login" method="POST" novalidate>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <h1 id="login-title">Iniciar Sesión</h1>
 
         <% if (notice) { %>

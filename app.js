@@ -6,6 +6,7 @@ const expressLayouts = require('express-ejs-layouts');
 
 const routes = require('./src/routes');
 const cartLocals = require('./src/middlewares/cartLocals');
+const csrfProtection = require('./src/middlewares/csrfProtection');
 const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandler');
 
 const app = express();
@@ -35,10 +36,15 @@ app.use(
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { httpOnly: true, sameSite: 'lax' },
+    cookie: {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+    },
   }),
 );
 
+app.use(csrfProtection);
 app.use(cartLocals);
 
 /**

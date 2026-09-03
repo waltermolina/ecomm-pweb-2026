@@ -14,6 +14,7 @@
     <% } else { %>
       <p class="stock">Stock disponible: <%= product.stock %></p>
       <form action="/cart/add/<%= product.id %>" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit" class="button">Agregar al carrito</button>
       </form>
     <% } %>
