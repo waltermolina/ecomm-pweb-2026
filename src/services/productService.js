@@ -23,7 +23,17 @@ const productService = {
    * @returns {import('../models/productModel').Product|undefined} Producto encontrado o `undefined`.
    */
   getById(id) {
-    return productModel.findAll().find((product) => product.id === Number(id));
+    return productModel.findById(Number(id));
+  },
+
+  /**
+   * Verifica si existe un producto con el identificador indicado.
+   * Utilizada por el middleware de normalización de ids contra SQLite.
+   * @param {number} id Identificador numérico del producto.
+   * @returns {boolean} `true` si el producto existe en la base.
+   */
+  exists(id) {
+    return productModel.exists(Number(id));
   },
 
   /**

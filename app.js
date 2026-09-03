@@ -60,7 +60,7 @@ app.use(errorHandler);
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`Mi Ecommerce Sprint 2 disponible en http://localhost:${PORT}`);
+    console.log(`Mi Ecommerce Sprint 3 disponible en http://localhost:${PORT}`);
   });
 }
 

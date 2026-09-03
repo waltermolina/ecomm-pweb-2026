@@ -32,7 +32,7 @@ function createHttpError(status, message) {
 
 /**
  * Middleware que valida el parámetro `:id` recibido por URL.
- * Responde 400 si el id no es numérico y 404 si el producto no existe.
+ * Responde 400 si el id no es numérico y 404 si el producto no existe en SQLite.
  * Deja disponibles `req.productId` y `req.product` para los controladores.
  * @param {import('express').Request} req Request de Express.
  * @param {import('express').Response} res Response de Express.
@@ -47,15 +47,13 @@ function validateProductId(req, res, next) {
     return;
   }
 
-  const product = productService.getById(id);
-
-  if (!product) {
+  if (!productService.exists(id)) {
     next(createHttpError(404, 'Producto inexistente.'));
     return;
   }
 
   req.productId = id;
-  req.product = product;
+  req.product = productService.getById(id);
   next();
 }
 

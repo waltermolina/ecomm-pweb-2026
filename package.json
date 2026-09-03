@@ -1,10 +1,11 @@
 {
   "name": "ecomm-pweb-2026",
   "version": "1.0.0",
-  "description": "Ecommerce educativo Sprint 2 con Express, EJS y arquitectura MVC.",
+  "description": "Ecommerce educativo Sprint 3 con Express, EJS, arquitectura MVC y persistencia en SQLite.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "migrate": "node db/migrate.js",
     "test": "node --check app.js"
   },
   "repository": {
@@ -15,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^13.0.3",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-ejs-layouts": "^2.5.1",
