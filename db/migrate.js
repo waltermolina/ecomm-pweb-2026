@@ -1,24 +1,14 @@
-const fs = require('fs');
-const path = require('path');
 const db = require('./database');
-
-const PRODUCTS_JSON_FILE = path.join(__dirname, '..', 'src', 'data', 'products.json');
+const seedProducts = require('./seedProducts');
 
 /**
- * Migra el catálogo de productos desde `src/data/products.json` hacia SQLite.
- * Es un script de una sola ejecución: usa `INSERT OR IGNORE` para no duplicar
- * productos si se vuelve a ejecutar por error. Si el archivo JSON ya no existe
- * (porque fue eliminado luego de migrar), no hace nada.
+ * Migra el catálogo de productos semilla hacia SQLite.
+ * Es un script idempotente: usa `INSERT OR IGNORE` para no duplicar
+ * productos si se vuelve a ejecutar. Reemplaza a la antigua lectura de
+ * `src/data/products.json`, eliminado tras completar la migración.
  * @returns {number} Cantidad de productos insertados.
  */
 function migrateProducts() {
-  if (!fs.existsSync(PRODUCTS_JSON_FILE)) {
-    console.log('No se encontró products.json: no hay nada para migrar.');
-    return 0;
-  }
-
-  const products = JSON.parse(fs.readFileSync(PRODUCTS_JSON_FILE, 'utf-8'));
-
   const insert = db.prepare(`
     INSERT OR IGNORE INTO products (id, name, description, category, categories, price, stock, image)
     VALUES (@id, @name, @description, @category, @categories, @price, @stock, @image)
@@ -45,7 +35,7 @@ function migrateProducts() {
     return inserted;
   });
 
-  const inserted = insertMany(products);
+  const inserted = insertMany(seedProducts);
   console.log(`Migración completada: ${inserted} producto(s) insertado(s).`);
 
   return inserted;

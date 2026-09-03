@@ -4,10 +4,17 @@ const express = require('express');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 
+const { migrateProducts } = require('./db/migrate');
 const routes = require('./src/routes');
 const cartLocals = require('./src/middlewares/cartLocals');
 const csrfProtection = require('./src/middlewares/csrfProtection');
 const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandler');
+
+/**
+ * Asegura que el catálogo semilla esté disponible en SQLite.
+ * Usa `INSERT OR IGNORE`, por lo que es seguro ejecutarla en cada arranque.
+ */
+migrateProducts();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
