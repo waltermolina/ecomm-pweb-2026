@@ -83,6 +83,34 @@
   }
 
   /**
+   * Normaliza rutas de imágenes para aceptar solo assets locales esperados.
+   *
+   * @param {string} image Ruta recibida desde el estado del carrito.
+   * @returns {string} Ruta segura para el atributo `src`.
+   */
+  function getSafeImagePath(image) {
+    const value = String(image ?? '');
+
+    if (/^\/images\/[\w.-]+\.svg$/.test(value)) {
+      return value;
+    }
+
+    return '/images/taza.svg';
+  }
+
+  /**
+   * Normaliza identificadores usados en URLs internas del carrito.
+   *
+   * @param {number|string} productId Identificador recibido por WebSocket.
+   * @returns {number} Identificador seguro.
+   */
+  function getSafeProductId(productId) {
+    const id = Number.parseInt(productId, 10);
+
+    return Number.isInteger(id) && id > 0 ? id : 0;
+  }
+
+  /**
    * Renderiza la vista `/cart` usando el estado recibido por WebSocket.
    *
    * @param {{items: number, total: number, detailedItems: object[]}} cart Estado del carrito.
@@ -113,17 +141,18 @@
     list.className = 'cart-list';
 
     cart.detailedItems.forEach((item) => {
+      const productId = getSafeProductId(item.productId);
       const article = document.createElement('article');
       article.className = 'cart-item';
 
       const image = document.createElement('img');
-      image.src = item.image;
+      image.src = getSafeImagePath(item.image);
       image.alt = `Imagen de ${item.name}`;
 
       const info = document.createElement('div');
       const title = document.createElement('h2');
       const productLink = document.createElement('a');
-      productLink.href = `/products/${item.productId}`;
+      productLink.href = `/products/${productId}`;
       productLink.textContent = item.name;
       title.append(productLink);
 
@@ -138,9 +167,9 @@
       controls.className = 'quantity-controls';
       controls.setAttribute('aria-label', `Controles de cantidad de ${item.name}`);
       controls.append(
-        createCartForm(`/cart/decrease/${item.productId}`, `Quitar una unidad de ${item.name}`, '-'),
-        createCartForm(`/cart/increase/${item.productId}`, `Agregar una unidad de ${item.name}`, '+'),
-        createCartForm(`/cart/remove/${item.productId}`, `Eliminar ${item.name}`, '×'),
+        createCartForm(`/cart/decrease/${productId}`, `Quitar una unidad de ${item.name}`, '-'),
+        createCartForm(`/cart/increase/${productId}`, `Agregar una unidad de ${item.name}`, '+'),
+        createCartForm(`/cart/remove/${productId}`, `Eliminar ${item.name}`, '×'),
       );
 
       const subtotal = document.createElement('p');
