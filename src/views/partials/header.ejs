@@ -13,8 +13,9 @@
   <nav class="main-nav" aria-label="Navegación principal">
     <a href="/">Home</a>
     <a href="/products">Productos</a>
-    <a href="/cart">Carrito (<%= typeof cartQuantity !== 'undefined' ? cartQuantity : 0 %>)</a>
+    <a href="/cart">Carrito (<span id="cart-count"><%= typeof cartQuantity !== 'undefined' ? cartQuantity : 0 %></span>)</a>
     <a href="/login">Login</a>
     <a href="/register">Register</a>
   </nav>
+  <p id="connection-status" class="connection-status" role="status" aria-live="polite">🔴 Desconectado</p>
 </header>

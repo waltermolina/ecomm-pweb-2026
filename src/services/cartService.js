@@ -165,6 +165,21 @@ const cartService = {
   getTotalQuantity(req) {
     return cartService.getCart(req).reduce((total, item) => total + item.quantity, 0);
   },
+
+  /**
+   * Resume el estado actual del carrito para vistas y eventos en tiempo real.
+   * @param {import('express').Request} req Request de Express.
+   * @returns {{items: number, total: number, detailedItems: CartDetailItem[]}} Estado del carrito.
+   */
+  getSummary(req) {
+    const detailedItems = cartService.getDetailedItems(req);
+
+    return {
+      items: detailedItems.reduce((total, item) => total + item.quantity, 0),
+      total: detailedItems.reduce((total, item) => total + item.subtotal, 0),
+      detailedItems,
+    };
+  },
 };
 
 module.exports = cartService;
