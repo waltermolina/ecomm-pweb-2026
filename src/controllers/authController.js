@@ -10,7 +10,21 @@ const authController = {
    * @returns {void}
    */
   loginForm(req, res) {
-    res.render('pages/login', { title: 'Login' });
+    res.render('pages/login', { title: 'Login', notice: '' });
+  },
+
+  /**
+   * Procesa el envío del login. No existe autenticación real en este sprint,
+   * por lo que solo se informa que la funcionalidad llegará más adelante.
+   * @param {import('express').Request} req Request de Express.
+   * @param {import('express').Response} res Response de Express.
+   * @returns {void}
+   */
+  login(req, res) {
+    res.render('pages/login', {
+      title: 'Login',
+      notice: 'Login disponible en el próximo sprint.',
+    });
   },
 
   /**

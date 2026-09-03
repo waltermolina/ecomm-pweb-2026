@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -9,6 +10,12 @@ const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandle
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+/**
+ * Clave de firma de la cookie de sesión.
+ * En desarrollo se genera una clave aleatoria por arranque para no versionar secretos.
+ */
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 
 /**
  * Configuración principal de Express.
@@ -25,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'mi-ecommerce-sprint-2',
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { httpOnly: true, sameSite: 'lax' },

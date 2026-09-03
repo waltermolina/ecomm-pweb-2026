@@ -9,8 +9,12 @@
 <body>
   <main>
     <section class="auth-page" aria-labelledby="login-title">
-      <form class="auth-form" novalidate>
+      <form class="auth-form" action="/login" method="POST" novalidate>
         <h1 id="login-title">Iniciar Sesión</h1>
+
+        <% if (notice) { %>
+          <p class="form-success" role="status"><%= notice %></p>
+        <% } %>
 
         <div class="form-field">
           <label for="login-user">Usuario o email</label>

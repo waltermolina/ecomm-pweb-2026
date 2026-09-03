@@ -8,7 +8,9 @@
 function notFoundHandler(req, res) {
   res.status(404).render('pages/404', {
     title: 'Página no encontrada',
+    status: 404,
     message: 'No encontramos la página que estabas buscando.',
+    description: 'Puede que el enlace haya cambiado o que el producto ya no esté disponible.',
   });
 }
 
@@ -27,12 +29,17 @@ function errorHandler(err, req, res, next) {
   const status = Number(err && err.status) || 500;
 
   if (status === 404 || status === 400) {
+    const isNotFound = status === 404;
+
     res.status(status).render('pages/404', {
-      title: status === 404 ? 'Página no encontrada' : 'Pedido inválido',
-      message:
-        status === 404
-          ? 'No encontramos la página que estabas buscando.'
-          : 'La dirección solicitada no es válida.',
+      title: isNotFound ? 'Página no encontrada' : 'Pedido inválido',
+      status,
+      message: isNotFound
+        ? 'No encontramos la página que estabas buscando.'
+        : 'La dirección solicitada no es válida.',
+      description: isNotFound
+        ? 'Puede que el enlace haya cambiado o que el producto ya no esté disponible.'
+        : 'Revisá el enlace: el identificador recibido no tiene un formato válido.',
     });
     return;
   }

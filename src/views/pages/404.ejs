@@ -1,6 +1,6 @@
-<section class="section error-page" aria-labelledby="not-found-title">
-  <h1 id="not-found-title">404</h1>
+<section class="section error-page" aria-labelledby="error-title">
+  <h1 id="error-title"><%= status %></h1>
   <p class="empty-message"><%= message %></p>
-  <p>Puede que el enlace haya cambiado o que el producto ya no esté disponible.</p>
+  <p><%= description %></p>
   <a class="button" href="/">Volver al inicio</a>
 </section>
