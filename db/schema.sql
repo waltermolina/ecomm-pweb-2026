@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS categories (
   name TEXT NOT NULL UNIQUE
 );
 
--- Tabla preparada para la autenticación real del Sprint 4.
--- No se utiliza en este sprint: no hay login ni registro reales.
+-- Usuarios de la aplicación. La contraseña siempre se almacena como hash.
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
-  email TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL COLLATE NOCASE UNIQUE,
   password_hash TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'consumer' CHECK (role IN ('consumer', 'admin')),
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 

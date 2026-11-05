@@ -1,7 +1,7 @@
 {
   "name": "ecomm-pweb-2026",
   "version": "1.0.0",
-  "description": "Ecommerce educativo Sprint 3 con Express, EJS, arquitectura MVC y persistencia en SQLite.",
+  "description": "Ecommerce educativo Sprint 6 con Express, EJS, autenticación JWT y sesiones en SQLite.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -16,12 +16,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "better-sqlite3": "^13.0.3",
     "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.19.0",
+    "jsonwebtoken": "^9.0.3",
     "ws": "^8.21.3"
   }
 }
