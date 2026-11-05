@@ -47,7 +47,7 @@ function errorHandler(err, req, res, next) {
       return;
     }
 
-    if (status === 400 || status === 404) {
+    if (status >= 400 && status < 500) {
       res.status(status).json({ error: err.message || 'Solicitud inválida' });
       return;
     }
@@ -83,7 +83,7 @@ function errorHandler(err, req, res, next) {
 }
 
 function isApiRequest(req) {
-  return req.path === '/api' || req.path.startsWith('/api/');
+  return /^\/api(?:\/|$)/i.test(req.path);
 }
 
 module.exports = { notFoundHandler, errorHandler };

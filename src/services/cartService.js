@@ -163,7 +163,9 @@ const cartService = {
    * @returns {number} Suma de todas las cantidades.
    */
   getTotalQuantity(req) {
-    return cartService.getCart(req).reduce((total, item) => total + item.quantity, 0);
+    return cartService
+      .getDetailedItems(req)
+      .reduce((total, item) => total + item.quantity, 0);
   },
 
   /**
