@@ -1,12 +1,14 @@
 const crypto = require('crypto');
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const { WebSocketServer } = require('ws');
 
 const { migrateProducts } = require('./db/migrate');
 const routes = require('./src/routes');
+const apiRoutes = require('./src/routes/api');
 const cartLocals = require('./src/middlewares/cartLocals');
 const csrfProtection = require('./src/middlewares/csrfProtection');
 const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandler');
@@ -50,6 +52,9 @@ app.use(expressLayouts);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
+app.use('/api', cors());
+app.use(express.json());
+app.use('/api', apiRoutes);
 
 app.use(sessionMiddleware);
 
