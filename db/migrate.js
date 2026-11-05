@@ -7,6 +7,7 @@ const seedProducts = require('./seedProducts');
  */
 function migrateProducts() {
   migrateProductIds();
+  migrateUsers();
 
   const insert = db.prepare(`
     INSERT OR IGNORE INTO products (id, name, description, category, categories, price, stock, image)
@@ -44,6 +45,14 @@ function migrateProducts() {
   console.log(`Migración completada: ${inserted} producto(s) insertado(s).`);
 
   return inserted;
+}
+
+function migrateUsers() {
+  const columns = db.prepare('PRAGMA table_info(users)').all();
+  if (!columns.some((column) => column.name === 'role')) {
+    db.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'consumer'");
+  }
+  db.exec('CREATE UNIQUE INDEX IF NOT EXISTS users_email_nocase ON users(email COLLATE NOCASE)');
 }
 
 function migrateProductIds() {
@@ -96,4 +105,4 @@ if (require.main === module) {
   migrateProducts();
 }
 
-module.exports = { migrateProducts, migrateCategories };
+module.exports = { migrateProducts, migrateCategories, migrateUsers };

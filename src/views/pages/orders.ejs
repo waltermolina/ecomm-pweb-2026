@@ -1,0 +1,12 @@
+<section class="page-section">
+  <h1>Mis pedidos</h1>
+  <% if (orders.length === 0) { %>
+    <p>Todavía no tenés pedidos.</p>
+  <% } else { %>
+    <ul>
+      <% orders.forEach((order) => { %>
+        <li>Pedido #<%= order.id %> — $<%= order.total.toFixed(2) %> — <%= order.createdAt %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</section>
