@@ -42,7 +42,8 @@ function errorHandler(err, req, res, next) {
     }
 
     if (status === 409) {
-      res.status(409).json({ error: err.message || 'Conflicto con el recurso' });
+      const message = err.status === 409 ? err.message : 'Conflicto con el recurso';
+      res.status(409).json({ error: message || 'Conflicto con el recurso' });
       return;
     }
 

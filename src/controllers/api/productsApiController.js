@@ -84,10 +84,11 @@ function validateProduct(body) {
     typeof description !== 'string' ||
     typeof category !== 'string' ||
     typeof image !== 'string' ||
-    !Number.isFinite(Number(price)) ||
-    Number(price) < 0 ||
-    !Number.isInteger(Number(stock)) ||
-    Number(stock) < 0
+    typeof price !== 'number' ||
+    !Number.isFinite(price) ||
+    price < 0 ||
+    !Number.isInteger(stock) ||
+    stock < 0
   ) {
     return null;
   }
@@ -96,8 +97,8 @@ function validateProduct(body) {
     name: name.trim(),
     description: description.trim(),
     category: category.trim(),
-    price: Number(price),
-    stock: Number(stock),
+    price,
+    stock,
     image: image.trim(),
   };
 }
