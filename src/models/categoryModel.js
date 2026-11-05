@@ -43,7 +43,7 @@ const categoryModel = {
 
   delete(id) {
     const deleteCategory = db.prepare('DELETE FROM categories WHERE id = ?');
-    const delete = db.transaction(() => {
+    const deleteCategoryTransaction = db.transaction(() => {
       const category = this.findById(id);
       if (!category) {
         return false;
@@ -60,7 +60,7 @@ const categoryModel = {
       return deleteCategory.run(id).changes > 0;
     });
 
-    return delete();
+    return deleteCategoryTransaction();
   },
 
   count() {
