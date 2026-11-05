@@ -1,6 +1,7 @@
 const express = require('express');
 const cartController = require('../controllers/cartController');
 const { validateProductId } = require('../middlewares/normalizeId');
+const { requireLogin } = require('../middlewares/sessionAuth');
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ const router = express.Router();
  * @route POST /cart/remove/:id - Elimina una línea completa.
  * @route POST /cart/clear - Vacía el carrito.
  */
+router.use(requireLogin);
 router.get('/', cartController.show);
 router.post('/add/:id', validateProductId, cartController.add);
 router.post('/increase/:id', validateProductId, cartController.increase);

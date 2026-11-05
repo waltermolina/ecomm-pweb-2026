@@ -1,5 +1,5 @@
-const crypto = require('crypto');
 const path = require('path');
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -13,6 +13,13 @@ const cartLocals = require('./src/middlewares/cartLocals');
 const csrfProtection = require('./src/middlewares/csrfProtection');
 const { notFoundHandler, errorHandler } = require('./src/middlewares/errorHandler');
 const eventService = require('./src/services/eventService');
+const { sessionAuth } = require('./src/middlewares/sessionAuth');
+
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!SESSION_SECRET || !JWT_SECRET) {
+  throw new Error('Configurá SESSION_SECRET y JWT_SECRET en el archivo .env.');
+}
 
 /**
  * Asegura que el catálogo semilla esté disponible en SQLite.
@@ -22,12 +29,6 @@ migrateProducts();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-/**
- * Clave de firma de la cookie de sesión.
- * En desarrollo se genera una clave aleatoria por arranque para no versionar secretos.
- */
-const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 
 const sessionMiddleware = session({
   secret: SESSION_SECRET,
@@ -59,6 +60,7 @@ app.use('/api', apiRoutes);
 app.use(sessionMiddleware);
 
 app.use(csrfProtection);
+app.use(sessionAuth);
 app.use(cartLocals);
 
 /**
@@ -74,7 +76,7 @@ app.use(errorHandler);
 
 if (require.main === module) {
   const httpServer = app.listen(PORT, () => {
-    console.log(`Mi Ecommerce Sprint 3 disponible en http://localhost:${PORT}`);
+    console.log(`Mi Ecommerce Sprint 6 disponible en http://localhost:${PORT}`);
   });
 
   /**
