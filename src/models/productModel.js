@@ -33,6 +33,34 @@ const productModel = {
   findById(id) {
     return db.prepare('SELECT * FROM products WHERE id = ?').get(id);
   },
+
+  create(product) {
+    const result = db.prepare(`
+      INSERT INTO products (name, description, category, price, stock, image)
+      VALUES (@name, @description, @category, @price, @stock, @image)
+    `).run(product);
+
+    return this.findById(Number(result.lastInsertRowid));
+  },
+
+  update(id, product) {
+    const result = db.prepare(`
+      UPDATE products
+      SET name = @name, description = @description, category = @category,
+          price = @price, stock = @stock, image = @image
+      WHERE id = @id
+    `).run({ ...product, id });
+
+    return result.changes ? this.findById(id) : undefined;
+  },
+
+  delete(id) {
+    return db.prepare('DELETE FROM products WHERE id = ?').run(id).changes > 0;
+  },
+
+  count() {
+    return db.prepare('SELECT COUNT(*) AS total FROM products').get().total;
+  },
 };
 
 module.exports = productModel;

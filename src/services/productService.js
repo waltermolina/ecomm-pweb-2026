@@ -1,4 +1,5 @@
 const productModel = require('../models/productModel');
+const categoryService = require('./categoriesService');
 
 const FEATURED_LIMIT = 5;
 const BEST_SELLERS_LIMIT = 10;
@@ -24,6 +25,24 @@ const productService = {
    */
   getById(id) {
     return productModel.findById(Number(id));
+  },
+
+  create(product) {
+    categoryService.ensureExists(product.category);
+    return productModel.create(product);
+  },
+
+  update(id, product) {
+    categoryService.ensureExists(product.category);
+    return productModel.update(Number(id), product);
+  },
+
+  delete(id) {
+    return productModel.delete(Number(id));
+  },
+
+  count() {
+    return productModel.count();
   },
 
   /**

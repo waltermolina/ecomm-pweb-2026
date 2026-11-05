@@ -6,6 +6,11 @@
  * @returns {void}
  */
 function notFoundHandler(req, res) {
+  if (isApiRequest(req)) {
+    res.status(404).json({ error: 'Recurso no encontrado' });
+    return;
+  }
+
   res.status(404).render('pages/404', {
     title: 'Página no encontrada',
     status: 404,
@@ -26,6 +31,32 @@ function notFoundHandler(req, res) {
  */
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
+  if (isApiRequest(req)) {
+    const status =
+      Number(err && err.status) ||
+      (String(err && err.code).startsWith('SQLITE_CONSTRAINT') ? 409 : 500);
+
+    if (status === 400 && err.type === 'entity.parse.failed') {
+      res.status(400).json({ error: 'Solicitud JSON inválida' });
+      return;
+    }
+
+    if (status === 409) {
+      const message = err.status === 409 ? err.message : 'Conflicto con el recurso';
+      res.status(409).json({ error: message || 'Conflicto con el recurso' });
+      return;
+    }
+
+    if (status === 400 || status === 404) {
+      res.status(status).json({ error: err.message || 'Solicitud inválida' });
+      return;
+    }
+
+    console.error('[api error]', err && err.message);
+    res.status(500).json({ error: 'Error interno del servidor' });
+    return;
+  }
+
   const status = Number(err && err.status) || 500;
 
   if (status === 404 || status === 400) {
@@ -49,6 +80,10 @@ function errorHandler(err, req, res, next) {
   res.status(500).render('pages/500', {
     title: 'Error interno',
   });
+}
+
+function isApiRequest(req) {
+  return req.path === '/api' || req.path.startsWith('/api/');
 }
 
 module.exports = { notFoundHandler, errorHandler };

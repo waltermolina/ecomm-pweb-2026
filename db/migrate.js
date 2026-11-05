@@ -36,13 +36,26 @@ function migrateProducts() {
   });
 
   const inserted = insertMany(seedProducts);
+  migrateCategories();
   console.log(`Migración completada: ${inserted} producto(s) insertado(s).`);
 
   return inserted;
+}
+
+/**
+ * Registra en la tabla administrable las categorías ya presentes en el catálogo.
+ * @returns {number} Cantidad de categorías insertadas.
+ */
+function migrateCategories() {
+  return db.prepare(`
+    INSERT OR IGNORE INTO categories (name)
+    SELECT DISTINCT category FROM products
+    WHERE category IS NOT NULL AND TRIM(category) <> ''
+  `).run().changes;
 }
 
 if (require.main === module) {
   migrateProducts();
 }
 
-module.exports = { migrateProducts };
+module.exports = { migrateProducts, migrateCategories };

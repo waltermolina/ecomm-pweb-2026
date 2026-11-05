@@ -13,6 +13,12 @@ CREATE TABLE IF NOT EXISTS products (
   image TEXT
 );
 
+-- Categorías administrables por la API; el catálogo conserva sus nombres para SSR.
+CREATE TABLE IF NOT EXISTS categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE
+);
+
 -- Tabla preparada para la autenticación real del Sprint 4.
 -- No se utiliza en este sprint: no hay login ni registro reales.
 CREATE TABLE IF NOT EXISTS users (
