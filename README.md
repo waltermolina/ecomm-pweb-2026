@@ -1,8 +1,9 @@
-# Mi Ecommerce Sprint 2
+# Mi Ecommerce Sprint 5
 
 Aplicación web monolítica educativa construida con Node.js, Express.js, EJS, HTML5 semántico y CSS3.
-El Sprint 2 evoluciona el proyecto a una arquitectura MVC, con datos reales desde un JSON local,
-carrito en sesión, validaciones, manejo de errores y lógica de negocio separada en servicios.
+El proyecto utiliza una arquitectura MVC con Express, EJS, persistencia SQLite, carrito en sesión,
+validaciones, manejo de errores y lógica de negocio separada en servicios. El Sprint 5 agrega una
+API REST JSON que convive con las páginas SSR existentes.
 
 ## Estructura del proyecto
 
@@ -68,6 +69,55 @@ project
 
 Los identificadores de las rutas se validan con `normalizeId()`: un id no numérico responde `400`
 y un id inexistente responde `404`.
+
+## API REST
+
+La API está disponible bajo `/api`, acepta JSON, habilita CORS y devuelve respuestas JSON.
+Las categorías existentes se migran desde el catálogo al iniciar la aplicación. Para conservar
+consistentes las vistas SSR, una categoría asociada a productos no se puede eliminar (409).
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| GET | `/api/products` | Lista productos. |
+| GET | `/api/products/:id` | Obtiene un producto. |
+| POST | `/api/products` | Crea un producto (201). |
+| PUT | `/api/products/:id` | Actualiza un producto. |
+| DELETE | `/api/products/:id` | Elimina un producto. |
+| GET | `/api/categories` | Lista categorías. |
+| GET | `/api/categories/:id` | Obtiene una categoría. |
+| POST | `/api/categories` | Crea una categoría (201). |
+| PUT | `/api/categories/:id` | Actualiza una categoría y su nombre en los productos. |
+| DELETE | `/api/categories/:id` | Elimina una categoría sin productos asociados. |
+| GET | `/api/stats` | Devuelve cantidades de productos y categorías. |
+
+Ejemplos para Postman o Thunder Client (seleccionar `Body > raw > JSON`):
+
+```http
+GET http://localhost:3000/api/products
+GET http://localhost:3000/api/categories/1
+GET http://localhost:3000/api/stats
+```
+
+```http
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "name": "Teclado de demostración",
+  "description": "Teclado para la demo del Sprint 5",
+  "category": "Periféricos",
+  "price": 49990,
+  "stock": 12,
+  "image": "/images/teclado.jpg"
+}
+```
+
+```http
+POST http://localhost:3000/api/categories
+Content-Type: application/json
+
+{ "name": "Accesorios" }
+```
 
 ## Instalación
 
