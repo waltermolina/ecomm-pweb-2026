@@ -1,5 +1,5 @@
 const productModel = require('../models/productModel');
-const categoryService = require('./categoryService');
+const categoryService = require('./categoriesService');
 
 const FEATURED_LIMIT = 5;
 const BEST_SELLERS_LIMIT = 10;

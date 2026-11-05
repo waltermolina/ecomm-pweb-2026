@@ -1,5 +1,5 @@
 const productService = require('../../services/productService');
-const categoryService = require('../../services/categoryService');
+const categoryService = require('../../services/categoriesService');
 
 /**
  * Devuelve métricas agregadas usando los servicios del catálogo.

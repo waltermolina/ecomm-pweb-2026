@@ -1,4 +1,4 @@
-const categoryService = require('../../services/categoryService');
+const categoryService = require('../../services/categoriesService');
 
 /**
  * Controlador HTTP de categorías. La persistencia queda en el servicio/modelo.
